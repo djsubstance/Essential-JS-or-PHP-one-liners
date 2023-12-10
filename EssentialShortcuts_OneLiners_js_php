@@ -1,0 +1,59 @@
+// Javscript - Can be pasted into Inspect Element to get all of that pages "Browser Store" data
+// This is typically data stored other then cookies, related to the page your on
+
+for (let i = 0; i < localStorage.length; i++) {
+  let key = localStorage.key(i);
+  let value = localStorage.getItem(key);
+  console.log(`${key}: ${value}`);
+}
+
+Example output:
+STATSIG_LOCAL_STORAGE_INTERNAL_STORE_V4:{
+   "200381xxx3":{
+      "feature_gates":{
+         "575xxx630":{
+            "name":"57xxx30",
+            "value":false,
+            "rule_id":"default",
+            "id_type":"userID",
+            "secondary_exposures":[
+               
+            ]
+         },
+   ..........
+
+
+Using jQuery select all elements via Inspect/Console in class - .trigger-icon:
+document.querySelectorAll('.trigger-icon').forEach(element => element.click());
+
+----------
+How to use Xpath in console (inspect) 
+var xpath = "//*[@id='didomi-consent-popup']/div/div/div/div/div[3]/div[1]/div[2]/div/div[128]/div[1]/div[1]/div";
+var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+for (var i = 0; i < elements.snapshotLength; i++) {
+    var element = elements.snapshotItem(i);
+    element.click();
+}
+
+ - this is an example using Xpath
+Another example to click all buttons/icons in the consent-popup
+var xpath = "//*[@id='didomi-consent-popup']//div[@class='some-common-class']/button[1]"; // Adjust this XPath to target the buttons
+var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+for (var i = 0; i < elements.snapshotLength; i++) {
+    var element = elements.snapshotItem(i);
+    element.click();
+}
+
+-----------
+- How to block all cookies / modify selectr for Xpath
+ar xpath = "/html/body/div[1]/div/div[1]/div/div/div/div/div[3]/div[1]/div[2]/div/div[2]//button[text()='Block']"; // Adjust this XPath to accurately select all 'Block' options
+var elements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+for (var i = 0; i < elements.snapshotLength; i++) {
+    var element = elements.snapshotItem(i);
+    element.click();
+}
+
+
