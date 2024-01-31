@@ -40,3 +40,7 @@ function openFuzzedTabs() {
 
 // Run the function
 openFuzzedTabs();
+
+
+
+------- Example of output can be found on: https://imgur.com/a/8dxoWgB
