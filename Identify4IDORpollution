@@ -1,0 +1,217 @@
+// Paste into console after loading a modern web app
+
+let constructors = (function detectPrototypePollution() {
+  const globalObjects = ['Object', 'Array', 'String', 'Number', 'Boolean', 'Date', 'RegExp'];
+  const vulnerableProperties = [];
+
+  globalObjects.forEach((objName) => {
+    const proto = window[objName].prototype;
+    Object.getOwnPropertyNames(proto).forEach((prop) => {
+      const descriptor = Object.getOwnPropertyDescriptor(proto, prop);
+      if (descriptor && descriptor.writable && descriptor.configurable && !descriptor.enumerable) {
+        vulnerableProperties.push({ object: objName, property: prop, descriptor: descriptor });
+      }
+    });
+  });
+
+  if (vulnerableProperties.length > 0) {
+    console.warn('Potential prototype pollution vulnerabilities detected:');
+    vulnerableProperties.forEach((vuln) => {
+      console.log(`Object: ${vuln.object}, Property: ${vuln.property}, Descriptor:`, vuln.descriptor);
+    });
+  } else {
+    console.log('No obvious prototype pollution vulnerabilities detected.');
+  }
+})();
+
+
+// ***************************************** [ Expected output ] ****************************************************** //
+//
+/*
+
+--- What to Look For Regarding Prototype Pollution
+Understanding the Output: 
+//  Initially if your lucky you see:
+--> VM117:16 Potential prototype pollution vulnerabilities detected:
+--> detectPrototypePollution @ VM117:16
+(anonymous) @ VM117:23 <- This has to do with source/sink return value
+
+Then you see:
+Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+
+Explaination of each of the output TRUE/FALSE's:
+  * Writable: Indicates that the property's value can be changed with an assignment operator.
+  * Enumerable: Indicates that the property shows up during enumeration of the properties on the corresponding object.
+  * Configurable: Indicates that the property can be deleted from the object and that its attributes (except for value and writable) can be modified.
+  * Value: The function or value associated with the property.
+  * Prototype pollution is a vulnerability that occurs when an attacker is able to add or modify properties of the object prototype. 
+    This can lead to unexpected behavior in applications, including potential security vulnerabilities. When inspecting properties 
+    like you have, you're looking for points where an attacker might be able to modify the prototype in a way that affects all objects 
+    inheriting from that prototype.
+*/
+
+Now this nifty script iterates through all the objects that are possibly pollutable and their status:
+VM117:18 Object: Object, Property: constructor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: __defineGetter__, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: __defineSetter__, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: hasOwnProperty, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: __lookupGetter__, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: __lookupSetter__, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: isPrototypeOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: propertyIsEnumerable, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: toString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: valueOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Object, Property: toLocaleString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: constructor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: at, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: concat, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: copyWithin, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: fill, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: find, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: findIndex, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: findLast, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: findLastIndex, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: lastIndexOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: pop, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: push, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: reverse, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: shift, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: unshift, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: slice, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: sort, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: splice, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: includes, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: indexOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: join, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: keys, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: entries, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: values, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: forEach, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: filter, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: flat, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: flatMap, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: map, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: every, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: some, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: reduce, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: reduceRight, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: toReversed, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: toSorted, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: toSpliced, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: with, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: toLocaleString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Array, Property: toString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: constructor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: anchor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: at, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: big, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: blink, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: bold, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: charAt, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: charCodeAt, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: codePointAt, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: concat, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: endsWith, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: fontcolor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: fontsize, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: fixed, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: includes, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: indexOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: isWellFormed, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: italics, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: lastIndexOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: link, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: localeCompare, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: match, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: matchAll, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: normalize, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: padEnd, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: padStart, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: repeat, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: replace, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: replaceAll, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: search, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: slice, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: small, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: split, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: strike, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: sub, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: substr, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: substring, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: sup, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: startsWith, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: toString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: toWellFormed, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: trim, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: trimStart, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: trimLeft, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: trimEnd, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: trimRight, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: toLocaleLowerCase, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: toLocaleUpperCase, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: toLowerCase, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: toUpperCase, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: String, Property: valueOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Number, Property: constructor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Number, Property: toExponential, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Number, Property: toFixed, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Number, Property: toPrecision, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Number, Property: toString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Number, Property: valueOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Number, Property: toLocaleString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Boolean, Property: constructor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Boolean, Property: toString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Boolean, Property: valueOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: constructor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toDateString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toTimeString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toISOString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toUTCString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toGMTString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getDate, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setDate, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getDay, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getFullYear, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setFullYear, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getHours, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setHours, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getMilliseconds, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setMilliseconds, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getMinutes, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setMinutes, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getMonth, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setMonth, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getSeconds, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setSeconds, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getTime, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setTime, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getTimezoneOffset, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getUTCDate, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setUTCDate, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getUTCDay, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getUTCFullYear, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setUTCFullYear, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getUTCHours, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setUTCHours, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getUTCMilliseconds, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setUTCMilliseconds, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getUTCMinutes, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setUTCMinutes, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getUTCMonth, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setUTCMonth, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getUTCSeconds, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setUTCSeconds, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: valueOf, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: getYear, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: setYear, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toJSON, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toLocaleString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toLocaleDateString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: Date, Property: toLocaleTimeString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: RegExp, Property: constructor, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: RegExp, Property: exec, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: RegExp, Property: compile, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: RegExp, Property: toString, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+VM117:18 Object: RegExp, Property: test, Descriptor: {writable: true, enumerable: false, configurable: true, value: ƒ}
+undefined <- this means the function returned 0 or nothing
