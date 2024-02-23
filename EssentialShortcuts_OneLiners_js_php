@@ -1,7 +1,7 @@
 // Javscript - Can be pasted into Inspect Element
-
 // DUMP BROWSER STORE - to get all of that pages "Browser Store" data
 // This is typically data stored other then cookies, related to the page your on
+
 
 for (let i = 0; i < localStorage.length; i++) {
   let key = localStorage.key(i);
@@ -135,3 +135,76 @@ $(document).on('invalid-form.validate', 'form', function () {
 
 // Execute the code
 eval(allInOneScript);
+
+
+
+-------
+
+ ░▒▓██████▓▒░ ░▒▓███████▓▒░        ░▒▓█▓▒░▒▓████████▓▒░▒▓██████▓▒░▒▓████████▓▒░▒▓███████▓▒░ 
+░▒▓█▓▒░░▒▓█▓▒ ░▒▓█▓▒░░▒▓█▓▒░       ░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░  ░▒▓█▓▒░        
+░▒▓█▓▒░░▒▓█▓▒ ░▒▓█▓▒░░▒▓█▓▒░       ░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░        ░▒▓█▓▒░  ░▒▓█▓▒░        
+░▒▓█▓▒░░▒▓█▓▒ ░▒▓███████▓▒░        ░▒▓█▓▒░▒▓██████▓▒░░▒▓█▓▒░        ░▒▓█▓▒░   ░▒▓██████▓▒░  
+░▒▓█▓▒░░▒▓█▓▒ ░▒▓█▓▒░░▒▓█▓▒ ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░        ░▒▓█▓▒░         ░▒▓█▓▒░ 
+░▒▓█▓▒░░▒▓█▓▒ ░▒▓█▓▒░░▒▓█▓▒ ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░         ░▒▓█▓▒░ 
+ ░▒▓██████▓▒░ ░▒▓███████▓▒░  ░▒▓██████▓▒░░▒▓████████▓▒░▒▓██████▓▒░  ░▒▓█▓▒░  ░▒▓███████▓▒░  
+
+   AND PROTOTYPE ENUMERATION VIA CONSOLE
+                                                                                          
+
+
+Testing different prototypes and objects in JavaScript can be crucial for understanding Javascript/DOM:
+ * inheritance
+ * Property access
+ * overall behavior of objects
+
+Examples for console you can paste in to debug:
+
+[ Check if an object is the prototype of another ]
+ Object.getPrototypeOf(childObj) === parentObj; // returns true if parentObj is the prototype of childObj
+
+[ Verify if a property exists on an object's prototype chain ]
+ "propertyName" in obj; // returns true if propertyName exists anywhere in obj's prototype chain
+
+[ Check if a property is directly on an object and not on its prototype chain ]
+obj.hasOwnProperty('propertyName'); // returns true if propertyName is a direct property of obj
+
+[ Create an object with a specific prototype ]
+const newObj = Object.create(prototypeObj); // creates a new object with prototypeObj as its prototype
+
+[ Add a property to an object’s prototype (affects all objects inheriting from it) ]
+PrototypeObj.prototype.newProperty = 'value'; // adds newProperty to the PrototypeObj's prototype
+
+[ Determine if one object is a prototype of another (alternative method) ]
+childObj instanceof ParentClass; // returns true if ParentClass.prototype is in childObj's prototype chain
+
+[ Get the constructor function of an object ]
+ obj.constructor; // returns the constructor function that created the instance obj
+
+[ Check if an object is an instance of a specific constructor ]
+ obj instanceof ConstructorFunction; // returns true if obj is an instance of ConstructorFunction
+
+[ Change an object’s prototype (modern browsers only, use with caution) ]
+ Object.setPrototypeOf(obj, newPrototype); // changes the prototype of obj to newPrototype
+
+[ Clone an object including its prototype ]
+ const clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
+
+[ List all properties of an object, including non-enumerable ones ]
+ Object.getOwnPropertyNames(obj); // returns an array of all properties found directly upon obj
+
+[ Check for an object's own enumerable properties ]
+ Object.keys(obj); // returns an array of all enumerable properties found directly upon obj
+
+[ Freeze an object to prevent new properties from being added and existing ones from being changed ]
+Object.freeze(obj); // freezes obj, making it immutable
+
+[ Seal an object to prevent new properties from being added while allowing modifications to existing pro ]
+ Object.seal(obj); // seals obj, can't add new properties but can modify existing ones
+
+[ Check if an object is frozen ]
+ Object.isFrozen(obj); // returns true if obj is frozen
+
+[ Check if an object is sealed ]
+   Object.isSealed(obj); // returns true if obj is sealed
+
+
