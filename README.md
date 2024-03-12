@@ -1,24 +1,32 @@
-                                                                                                            
-ONE LINERS:
 
+<!-- <img width="419" alt="image" src="https://github.com/djsubstance/Essential-JS-or-PHP-one-liners/assets/20057689/a944fd34-1e76-4001-8962-b97032901427"> -->
 
-Collection of pretty freeking handy scripts or one liners.. PHP or JS:
+Essential one liners in mostly JS:
 
-Primarily the .js is meant to paste into the inspect/console:
-DumpScript.js - Paste these lines into console and see a <div> window (it should go away with ESC) of all scripts
-<img width="419" alt="image" src="https://github.com/djsubstance/Essential-JS-or-PHP-one-liners/assets/20057689/a944fd34-1e76-4001-8962-b97032901427">
-
-
+  
 Example:
+Create Object and set values in it for later pollution testing:
+var params = {
+  s: '1197757129',
+  t: time,
+  err_url: document.URL,
+  err: '500',
+  test: '-',
+  ats_host: 'ats-ncache-fp--production-ne1-d9d7c7969-xpncr',
+  rid: '-',
+  message: 'Could not process this request'
+};
+
+
  setInterval(() => document.querySelector('button.ant-btn.load-more.ant-btn-primary')?.click(), 100);
 
  
 
-Notes:
+**Notes:
 the 'window' interface of the DOM:
 The Window interface is home to a variety of functions, namespaces, objects, and constructors which are not necessarily directly associated with the 
 concept of a user interface window. However, the Window interface is a suitable place to include these items that need to be globally available.
---------
+--------**
 the 'document.defaultView' object in the DOM returns the window object associated with a document, or null if none is available. This property is read-only.
 
 In addition, every kind of DOM node is represented by an interface based on Node. These include Attr, CharacterData (which Text, Comment, CDATASection 
