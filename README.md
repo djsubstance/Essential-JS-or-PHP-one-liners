@@ -2,6 +2,7 @@
 <!-- <img width="419" alt="image" src="https://github.com/djsubstance/Essential-JS-or-PHP-one-liners/assets/20057689/a944fd34-1e76-4001-8962-b97032901427"> -->
 
 Essential one liners in mostly JS:
+jQuery shortcut: $(function(){ ... }); is shorthand for $(document).ready(function(){ ... });
 
   
 Example:
