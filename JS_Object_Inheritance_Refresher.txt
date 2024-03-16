@@ -1,0 +1,104 @@
+
+
+       ░▒▓█▓▒░░▒▓███████▓▒░       ░▒▓██████▓▒░░▒▓███████▓▒░       ░▒▓█▓▒░▒▓████████▓▒░▒▓██████▓▒░▒▓████████▓▒░▒▓███████▓▒░ 
+       ░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░  ░▒▓█▓▒░        
+       ░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░        ░▒▓█▓▒░  ░▒▓█▓▒░        
+       ░▒▓█▓▒░░▒▓██████▓▒░       ░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░       ░▒▓█▓▒░▒▓██████▓▒░░▒▓█▓▒░        ░▒▓█▓▒░   ░▒▓██████▓▒░  
+░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░        ░▒▓█▓▒░         ░▒▓█▓▒░ 
+░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░     ░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░         ░▒▓█▓▒░ 
+ ░▒▓██████▓▒░░▒▓███████▓▒░        ░▒▓██████▓▒░░▒▓███████▓▒░ ░▒▓██████▓▒░░▒▓████████▓▒░▒▓██████▓▒░  ░▒▓█▓▒░  ░▒▓███████▓▒░  
+                                                                                                                           
+------------------------ [ Javascript Objects ] ------------------------                                                                                                                           
+
+
+*/
+Inheritance is a core concept in object-oriented programming (OOP) that allows a class to inherit 
+properties and methods from another class. In JavaScript, inheritance is primarily achieved through 
+prototypes.
+
+A prototype is essentially a fallback object that is used whenever an object is asked for a property 
+that it doesn't have. JavaScript's prototype-based inheritance allows you to create a hierarchy of 
+objects that inherit features from one another.
+
+Let's dive into a simple example to understand how inheritance works in JavaScript. We'll create a 
+hierarchy that represents a basic school system: a generic Person class from which a Teacher and a
+Student class inherit.
+
+[*] stepz to create the "base class" in JS:
+    base class name: hax0r
+    it will include properties that are common to the following:
+      status: blackhat
+      status: whitehat
+     age
+*/
+
+//  CREATE OBJECT hax0r
+
+class hax0r {
+  constructor(status, age) {
+    this.status = status;  
+      // status is going to be black or white
+    this.age = age;
+     // age should be > 12  
+}
+
+  describe() {
+    return `${this.status}, ${this.age} years old.`;
+  }
+}
+
+[*] Derived Classes (blackhat and whitehat)
+ - create two derived classes,
+     blackhat / whitehat
+ - which will inherit 
+from the hax0r class. 
+[ using the extends keyword ]
+
+[*] blackhat Class
+The blackhat class will have an additional property, 
+subject, representing the subject the blackhat specializes in.
+
+class blackhat extends hax0r {
+  constructor(name, age, subject) {
+    super(name, age); // Calls the constructor of the base class (hax0r)
+    this.subject = subject;
+  }
+
+  teach() {
+    return `${this.name} teaches ${this.subject}.`;
+  }}
+
+Student Class
+the Student class will have a grade property, indicating the student's grade level.
+
+class Student extends Person {
+  constructor(name, age, grade) {
+    super(name, age); // Calls the constructor of the base class (Person)
+    this.grade = grade;
+  }
+
+  study() {
+    return `${this.name} studies in grade ${this.grade}.`;
+  }
+}
+Step 3: Instantiating and Using the Classes
+Now, let's create instances of Teacher and Student to see inheritance in action.
+
+const mrSmith = new Teacher('John Smith', 40, 'Mathematics');
+console.log(mrSmith.describe()); // From Person class
+console.log(mrSmith.teach()); // From Teacher class
+
+const janeDoe = new Student('Jane Doe', 16, '10');
+console.log(janeDoe.describe()); // From Person class
+console.log(janeDoe.study()); // From Student class
+
+How It Works
+Extending Classes: The extends keyword creates a subclass. 
+The subclass inherits all the properties and methods from the superclass.
+
+The super Function: Inside a subclass constructor, super() is used to call the constructor of its superclass. This is necessary to ensure that the superclass is initialized properly.
+
+Method Overriding: If a method in the subclass has the same name as a method in the superclass, the subclass's method overrides the superclass's method. If you still want to access the superclass's method, you can do so using super.methodName().
+
+Conclusion
+JavaScript's prototype-based inheritance provides a powerful and flexible mechanism for creating hierarchies of objects. By understanding and utilizing this concept, you can structure your JavaScript code in a more organized and reusable way, taking full advantage of OOP principles.
