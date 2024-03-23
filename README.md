@@ -1,4 +1,36 @@
 
+ ------------------------------------------ [ Javascript Core Methods / Functions    ] --------------------------------------------------
+
+xhr.open: Initializes a new request (or re-initializes an existing one) in an XMLHttpRequest object with a specified method and URL.
+xhr.send: Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent.
+fetch: A modern interface that allows you to make network requests similar to XMLHttpRequest. It returns promises and is more powerful and flexible.
+fetch.header: Used to read and modify the headers of a fetch request.
+fetch.url: The URL of the request made using the fetch API.
+fetch.body: The body of the request made using the fetch API, used to specify the data to be sent to the server.
+xhr.setRequestHeader.name: Specifies the name of an HTTP request header to be set before sending a request with XMLHttpRequest.
+xhr.setRequestHeader.value: Specifies the value of an HTTP request header to be set with setRequestHeader.
+document.domain: Gets or sets the domain of the current document, used for same-origin policy.
+history.pushState: Adds an entry to the browser's session history stack, allowing you to change the URL without reloading the page.
+history.replaceState: Similar to pushState but replaces the current entry in the session history stack.
+xhr.setRequestHeader: Sets the value of an HTTP request header when using XMLHttpRequest.
+websocket: A protocol providing full-duplex communication channels over a single TCP connection, used for real-time data transfer between a client and a server.
+anchor.href: The URL (href attribute) of an <a> anchor element.
+JSON.parse: Parses a JSON string, constructing the JavaScript value or object described by the string.
+document.cookie: Allows you to read, write, and delete the cookies associated with the document.
+localStorage.setItem.name: Sets the name of an item in the browser's local storage.
+localStorage.setItem.value: Sets the value of an item in the browser's local storage.
+sessionStorage.setItem.name: Sets the name of an item in the browser's session storage.
+sessionStorage.setItem.value: Sets the value of an item in the browser's session storage.
+window.name: Gets or sets the name of the window.
+location.pathname: Returns the path segment of the URL.
+location.protocol: Returns the protocol scheme of the URL (e.g., "http:" or "https:").
+location.host: Returns the host name and port number of a URL.
+location.hostname: Returns the domain name of the URL.
+location.hash: Returns the anchor part of a URL, including the hash sign (#).
+location.search: Returns the query string part of a URL, including the question mark (?).
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
 <!-- <img width="419" alt="image" src="https://github.com/djsubstance/Essential-JS-or-PHP-one-liners/assets/20057689/a944fd34-1e76-4001-8962-b97032901427"> -->
 
 Essential one liners in mostly JS:
