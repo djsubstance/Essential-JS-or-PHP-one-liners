@@ -1,4 +1,4 @@
-
+<pre>
  ------------------------------------------ [ Javascript Core Methods / Functions    ] --------------------------------------------------
 
 xhr.open: Initializes a new request (or re-initializes an existing one) in an XMLHttpRequest object with a specified method and URL.
@@ -240,3 +240,4 @@ If you want to inspect objects at a certain point in your code's execution in de
 
 let obj = { hidden: 'value' };
 debugger; // Execution will pause here if the developer tools are open, allowing for in-depth i
+</pre>
