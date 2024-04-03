@@ -1,0 +1,32 @@
+Filename: understand-Invalid-RPC-Origin-message.txt
+Author: substance
+
+Description: somewhat rare error in console: "invalid rpc message origin. vs https://feedback-pa.clients6.<example>.com"
+Explanation:
+
+The message "invalid rpc message origin" occurs when web applications or services that use RPC for communication (between system components).
+This typically happens to make cross origin (different domain) requests called Cross-Origin requests.
+
+Invalid RPC message: RPC is a protocol that one program can use to request a service from a program located in another computer in a network. 
+An invalid RPC message request doesn't meet the expected criteria for processing.
+There are a few culprits, but almost always related to headers and corps, CSP, same site headers etc, which could be due to various reasons such as incorrect parameters, unexpected request format, or authentication/authorization issues.
+
+Origin: In web applications, the "origin" refers to the domain, protocol, and port from which the request is made. 
+Browsers implement the same-origin policy, which restricts how a document or script loaded from one origin can interact with a resource from another origin.
+
+In the given context, where the error message is juxtaposed with a URL (https://feedback-pa.clients6.<example>.com), it suggests that an RPC request was attempted from a web page or script hosted on a different origin than the one expected or allowed by the server at https://feedback-pa.clients6.<example>.com.
+
+Possible Scenarios and Solutions
+[*] Cross-Origin Resource Sharing (CORS) Issues: The server at https://feedback-pa.clients6.lab.com might be rejecting RPC requests from a different origin due to CORS policy. If you control the server, you may need to configure it to accept requests from the origin of the RPC caller by setting the appropriate CORS headers.
+
+[*] Referer Header Check: The server might be checking the HTTP Referer header of the RPC request to validate the origin. Ensure that the client is sending the correct Referer header and that it matches the expectations of the server.
+
+[*] URL/Endpoint Misconfiguration: Ensure that the RPC client is configured to send requests to the correct URL or endpoint, and that there is no misconfiguration causing the request to be seen as originating from an unexpected source.
+
+[*] Development and Production Environment Mismatch: Sometimes, this error can occur if there's a mismatch between development and production environments, where the development environment allows broader origins than the production setup. Ensure that your testing environment accurately reflects the production CORS policy.
+
+[*] Proxy or Network Configuration: If there’s a proxy or network element altering the requests, it might cause the origin to appear different at the server. Check any intermediary network devices or software to ensure they're not modifying the requests in a way that causes this issue.
+
+In summary, this error typically involves cross-origin communication and indicates that the server is rejecting the RPC request because it originates from an unexpected or unauthorized source. Resolving it involves reviewing and potentially modifying the origin validation logic, CORS configuration, or network setup to allow these requests as appropriate.
+
+
