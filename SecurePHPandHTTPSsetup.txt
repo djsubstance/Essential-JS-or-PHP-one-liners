@@ -1,0 +1,90 @@
+
+
+PHP header security:
+
+If you wish to configure PHP settings specifically within your index.php file rather than globally through the php.ini file, you can use the ini_set() function. 
+This function allows you to change the value of PHP configuration options at runtime, which means these changes will only apply to the script during its execution and won't affect other scripts or global settings.
+
+How to Use ini_set() in index.php
+
+<?php
+// Setting the maximum execution time of the script to 30 seconds
+ini_set('max_execution_time', '30');
+
+// Setting the default timezone used by all date/time functions in a script
+ini_set('date.timezone', 'America/New_York');
+
+// Increasing the memory limit for this script
+ini_set('memory_limit', '256M');
+
+// Displaying errors (useful for development environments)
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+// Start of your application code
+echo "PHP settings adjusted for this script.";
+
+?>
+
+To disable logging to dom and log to error/php.err:
+<?php
+// Turn off error reporting to the browser
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
+
+// Set error reporting level - Report all errors except for E_NOTICE
+error_reporting(E_ALL & ~E_NOTICE);
+
+// Log errors to a specific file
+ini_set('log_errors', '1');
+ini_set('error_log', 'error/php.err');
+
+// Ensure the directory exists and is writable
+if (!is_dir('error')) {
+    mkdir('error', 0755, true);
+}
+
+
+ini_set('display_errors', '0'); 
+ini_set('display_startup_errors', '0'); 
+error_reporting(E_ALL & ~E_NOTICE);
+ini_set('log_errors', '1'); 
+ini_set('error_log', 'error/php.err'); 
+display_errors = Off
+display_startup_errors = Off
+log_errors = On
+error_reporting = E_ALL & ~E_NOTICE
+error_log = /path/to/your/error/php.err
+
+
+other suggestions:
+// Define the directory and file
+$errorDir = 'error';
+$errorFile = $errorDir . '/php.err';
+
+// Check if the error directory exists
+if (!is_dir($errorDir)) {
+    die('Error directory does not exist. Please contact the administrator.');
+}
+
+// Check if the error log file exists and is writable
+if (!file_exists($errorFile) || !is_writable($errorFile)) {
+    die('Error log file does not exist or is not writable. Please contact the administrator.');
+}
+
+// Configure PHP settings
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
+error_reporting(E_ALL & ~E_NOTICE);
+ini_set('log_errors', '1');
+ini_set('error_log', $errorFile);
+
+
+permissions:
+chmod 644 /path/to/error/php.err
+chmod 755 /path/to/error
+
+chown www-data:www-data /path/to/error -R
+
+
