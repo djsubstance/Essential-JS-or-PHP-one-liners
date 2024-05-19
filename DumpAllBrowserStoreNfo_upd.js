@@ -2,9 +2,14 @@ Filename: DumpAllBrowserStoreNfo.txt
 Desc: Made for Inspect Console ( to paste in ) but will work as normal JS obviously
 Purpose: To expose in a easy way to hijack and send to other resources (potentially) the session data cookie etc.
 Original Creation Date: 02/04/24
-Last Update: 04/08/24
+Last Update: 04/19/24
 By: substance
 Note: Multiple revisions are listed here as i was tweaking it to make it more efficient, the latest version is at the top:
+
+
+Latest version (v1.3a) minified:
+console.log(`Browser Local Storage:\n${localStorage.length ? JSON.stringify(Object.fromEntries([...Array(localStorage.length)].map((_, i) => [localStorage.key(i), localStorage.getItem(localStorage.key(i))])), null, 2) : "None Found"}\n\n[*] Session Storage:\n${sessionStorage.length ? JSON.stringify(Object.fromEntries([...Array(sessionStorage.length)].map((_, i) => [sessionStorage.key(i), sessionStorage.getItem(sessionStorage.key(i))])), null, 2) : "None Found"}\n\n-------------\n[*] Cookies:\n\t${document.cookie ? `{${document.cookie.split(';').map(cookie => `\n  "${cookie.split('=')[0].trim()}": "${cookie.split('=')[1]}"`).join(',')}\n\t}` : "None Found"}\n-------------\n`);
+
 
 Latest version (v1.2a)
 ---------------------------- NOT ONE LINER - EXPANDED FOR CLARITY -----------------------
