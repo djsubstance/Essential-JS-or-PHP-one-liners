@@ -12,6 +12,9 @@
 
 // Paste into console for list of all defined "nonstandard" looking DIV's
                                                                                                  
+one liner: 
+document.querySelectorAll('div').forEach(div => !['container', 'main', 'content', 'wrapper', 'footer', 'header', 'sidebar'].some(name => div.className.split(/\s+/).includes(name) || div.id === name) && console.log(div));
+
 
 
 document.querySelectorAll('div').forEach(function(div) {
