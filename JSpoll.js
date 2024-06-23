@@ -1,0 +1,1 @@
+Array.from(document.querySelectorAll('*')).forEach(el => { ['innerHTML', 'outerHTML', 'innerText', 'value', 'src', 'href', 'onerror', 'onload'].forEach(attr => { try { el[attr] = `<img src=x onerror=alert('XSS')>` } catch(e) {} }) });
