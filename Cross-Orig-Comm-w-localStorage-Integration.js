@@ -2,7 +2,7 @@ Info: Secure Cross-Origin Communication Script with localStorage Integration
 
 Prereq. knowledge: In JavaScript, everything is an Object under the hood. And typically objects have properties and methods associated with them. What this attack technique allows us to do is to alter the properties of Objects by tampering with their Prototypes. 
 
-Defined: Prototype
+Defined: Prototype 
   
 Lets look at this IIFE example of JS:
 
