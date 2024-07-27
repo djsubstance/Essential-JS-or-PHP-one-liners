@@ -1,0 +1,1 @@
+Object.getOwnPropertyNames(window).forEach(name => { try { const prop = window[name]; if (prop && typeof prop === 'object') console.log(`${name}:`, Object.getOwnPropertyNames(prop).join(', ')); } catch (e) { console.log(`${name}: [Error accessing properties]`); } });
