@@ -25,7 +25,7 @@ $$ | \$$\ $$  /   \$$ |      \$$$$$$  |\$$$$$$$\ \$$$$$$$ |$$ |      \$$$$$$$\ $
 Desc:  Will search dom / all scripts for the keywords at end of script
 
                                                                                          
-   
+    
 
 Method 1: (may not work in FF):
 (async terms => { const results = [], searchContent = (content, url) => { content.split('\n').forEach((line, index) => { if (terms.some(term => line.toLowerCase().includes(term.toLowerCase()))) { results.push({ url, lineNumber: index + 1, line: line.trim() }); } }); }; searchContent(document.documentElement.outerHTML, window.location.href); const fetchAndSearch = async url => { try { const response = await fetch(url), text = await response.text(); searchContent(text, url); } catch (e) { console.error(`Error fetching ${url}:`, e); } }; const urls = [...document.querySelectorAll('link[rel="stylesheet"], script[src]')].map(el => el.href || el.src); await Promise.all(urls.map(fetchAndSearch)); results.length ? results.forEach(result => console.log(`Found in ${result.url} (Line ${result.lineNumber}): ${result.line}`)) : console.log(`No occurrences of the terms "${terms.join(', ')}" found.`); })(['secret', 'token', 'bearer', 'api', 'key', 'jwt']).catch(console.error);
