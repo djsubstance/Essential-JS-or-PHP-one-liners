@@ -10,8 +10,13 @@
 
  ------------------------------------------ [ Javascript Core Methods / Functions    ] --------------------------------------------------
 
- Javascript Source  Sink 
-\Understanding Sources and Sinks in the Context of Web Security
+      Essential One Liners for console: 
+      Extract all hyperlinks to an array and display:
+        var CurrentLinks = Array.from(document.querySelectorAll('a[href^="http://"], a[href^="https://"]')).map(link => link.href); 
+        console.log(CurrentLinks);
+
+ Javascript Sources/Sink 
+Understanding Sources and Sinks in the Context of Web Security
 In the context of web security, particularly with Cross-Site Scripting (XSS) and other injection attacks,
 the concepts of "sources" and "sinks" are crucial:
 
